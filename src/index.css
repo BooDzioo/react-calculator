@@ -1,0 +1,74 @@
+body {
+  background-color: #352f40; 
+}
+
+.calculator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-shadow: 0 20px 50px black;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 700px;
+  background-color: #6c5496;
+  color:white;
+  cursor: pointer;
+}
+
+button {
+  width: 100px;
+  height: 109px;
+  font-size: 30px;
+  font-family: 'Inconsolata';
+  text-shadow: 2px 1px 7px black;
+  background-color: #352f40;
+  outline: 1px;
+  outline-color: #6c5496;
+  border: none;
+  color: white;
+}
+
+button:active {
+  transition-duration: 200ms;
+  background-color: #6535b8;
+  text-shadow: 2px 1px 10px white;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.sum {
+  width: 200px;
+  /*background-color:#d6d4d4 */
+  background-color:#403357;
+}
+.clearButton {
+  background-color:#403357;
+}
+
+.boardRow {
+
+}
+.calcButton {
+
+}
+.operations {
+  /* background-color:#d6d4d4; */
+  /*background-color:#493b63; */
+  background-color: #473960;
+}
+
+input {
+  background-color: #352f40;
+  border: none;
+  border-bottom: 3px solid #6535b8;
+  width: 400px;
+  height: 150px;
+  text-align: right;
+  font-size: 75px;
+  font-family: 'Inconsolata';
+  color: white;
+ 
+  
+}
