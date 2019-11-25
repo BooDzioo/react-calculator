@@ -132,7 +132,10 @@ class Calculator extends React.Component {
                     break;
            }
             this.handleClearClick()
-            this.setState({currentValue: sum})
+            this.setState({
+                currentValue: sum,
+                afterSum: true
+            })
         }   
     }
 
@@ -166,10 +169,18 @@ class Calculator extends React.Component {
     }
 
     handleChange(e) {
-        const currentValue = this.state.currentValue
-        const method = this.state.method
-        const isSecond = this.state.isSecond
-        const isFloat = this.state.isFloat
+        const afterSum = this.state.afterSum
+        let currentValue = this.state.currentValue
+        let method = this.state.method
+        let isSecond = this.state.isSecond
+        let isFloat = this.state.isFloat
+        if (afterSum == true) {
+            this.setState({
+                afterSum: false,
+                previousValue: ''
+            })
+            currentValue = ''
+        }
         if (e === '.' || isFloat === true) {
             this.setState({
                 isFloat: true,
