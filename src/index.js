@@ -2,92 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Power extends React.Component {
+class Operations extends React.Component {
     constructor(props) {
         super(props)
         this.handleClick = this.handleClick.bind(this)
     }
     handleClick() {
-        this.props.handleOperation('pow')
+        this.props.handleOperation(this.props.value)
     }
     render() {
         return(
-            <button onClick={this.handleClick} className='operations'>^</button>
-        )
-    }
-}
-
-class Square extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
-    handleClick() {
-        
-    }
-    render() {
-        return(
-            <button onClick={this.handleClick} className='operations'>√</button>
-        )
-    }
-}
-
-class AddButton extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
-    handleClick() {
-        this.props.handleOperation('add')
-    }
-    render() {
-        return (
-            <button className='operations' onClick={this.handleClick}>+</button>
-        )
-    }
-}
-
-class SubstractButton extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
-    handleClick() {
-        this.props.handleOperation('sub')
-    }
-    render() {
-        return (
-            <button className='operations' onClick={this.handleClick}>-</button>
-        )
-    }
-}
-
-class MultiplyButton extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
-    handleClick() {
-        this.props.handleOperation('mult')
-    }
-    render() {
-        return (
-            <button className='operations' onClick={this.handleClick}>x</button>
-        )
-    }
-}
-
-class DivideButton extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
-    handleClick() {
-        this.props.handleOperation('div')
-    }
-    render() {
-        return (
-            <button className='operations' onClick={this.handleClick}>÷</button>
+        <button onClick={this.handleClick} className='operations'>{this.props.value}</button>
         )
     }
 }
@@ -155,6 +80,7 @@ class Calculator extends React.Component {
         this.mult = this.mult.bind(this)
         this.div = this.div.bind(this)
         this.pow = this.pow.bind(this)
+        this.sqrt = this.sqrt.bind(this)
     }
 
     add(a, b) {
@@ -177,29 +103,58 @@ class Calculator extends React.Component {
         return Math.pow(a, b)
     }
 
-   /* sqrt(a) {
+    sqrt(a) {
+        console.log('eee')
         return Math.sqrt(a)
-    } */
+    } 
 
     handleSumClick() {
-        if(this.state.method !== ''){
-            const a = this.state.previousValue
-            const b = this.state.currentValue
-            const sum = this.state.method === 'add' ? this.add(a, b) : this.state.method === 'sub' ? this.sub(a, b) : this.state.method === 'div' ? this.div(a, b) : this.state.method === 'mult' ? this.mult(a, b) : this.pow(a, b)
+        const method = this.state.method
+        if(method !== ''){
+            let a = parseFloat(this.state.previousValue)
+            let b = parseFloat(this.state.currentValue)
+            let sum = a;
+            switch(method) {
+                case '+':
+                    sum = this.add(a, b)
+                    break;
+                case '-':
+                    sum = this.sub(a, b)
+                    break;
+                case '÷':
+                    sum = this.div(a, b)
+                    break;
+                case 'x':
+                    sum = this.mult(a ,b)
+                    break;
+                case '^':
+                    sum = this.pow(a, b)
+                    break;
+           }
             this.handleClearClick()
             this.setState({currentValue: sum})
         }   
     }
 
     handleOperation(e) {
-        this.setState({
+        let currentValue = this.state.currentValue
+        if (typeof currentValue === 'string') {
+            currentValue = parseFloat(currentValue)
+            console.log('string')
+            } 
+        if (e === '√') {
+            this.setState({
             method: e,
-            previousValue: this.state.currentValue,
-            currentValue: ''
-        })
-        console.log(this.state.previousValue)
-        console.log(this.state.currentValue)
-        console.log(this.state.method)
+            currentValue: this.sqrt(this.state.currentValue)     
+            })
+        } else {
+            this.setState({
+            method: e,
+            previousValue: currentValue,
+            isSecond: true,
+            isFloat: false
+        })}
+       
     }
 
     handleClearClick() {
@@ -211,12 +166,25 @@ class Calculator extends React.Component {
     }
 
     handleChange(e) {
-        let input = parseFloat(e)
-        if(this.state.currentValue === '') {
-           this.setState({currentValue: input})
-       } else {
-           this.setState({currentValue: this.state.currentValue * 10 + input})
-       }
+        const currentValue = this.state.currentValue
+        const method = this.state.method
+        const isSecond = this.state.isSecond
+        const isFloat = this.state.isFloat
+        if (e === '.' || isFloat === true) {
+            this.setState({
+                isFloat: true,
+                currentValue: `${currentValue}${e}`
+            })
+        } else {
+            let input = parseFloat(e)
+            if (currentValue === '' || isSecond === true) {
+            this.setState({
+                currentValue: input,
+                isSecond: false
+            })
+            } else {
+                this.setState({currentValue: currentValue * 10 + input})
+        } }
     }
 
     render() {
@@ -226,27 +194,27 @@ class Calculator extends React.Component {
                 <input value={value}></input>
                 <div className='boardRow'>
                     <ClearButton handleClearClick={this.handleClearClick}/>
-                    <Power handleOperation={this.handleOperation}/>
-                    <Square />
-                    <AddButton handleOperation={this.handleOperation}/>
+                    <Operations handleOperation={this.handleOperation} value='^'/>
+                    <Operations handleOperation={this.handleOperation} value='√'/>
+                    <Operations handleOperation={this.handleOperation} value='+'/>
                 </div>
                 <div className='boardRow'>
                     <CalcButton value='1' handleChange={this.handleChange}/>
                     <CalcButton value='2' handleChange={this.handleChange}/>
                     <CalcButton value='3' handleChange={this.handleChange}/>
-                    <SubstractButton handleOperation={this.handleOperation}/>
+                    <Operations handleOperation={this.handleOperation} value='-'/>
                 </div>
                 <div className='boardRow'>
                     <CalcButton value='4' handleChange={this.handleChange}/>
                     <CalcButton value='5' handleChange={this.handleChange}/>
                     <CalcButton value='6' handleChange={this.handleChange}/>
-                    <MultiplyButton handleOperation={this.handleOperation}/>
+                    <Operations handleOperation={this.handleOperation} value='x'/>
                 </div>
                 <div className='boardRow'>
                     <CalcButton value='7' handleChange={this.handleChange}/>
                     <CalcButton value='8' handleChange={this.handleChange}/>
                     <CalcButton value='9' handleChange={this.handleChange}/>
-                    <DivideButton handleOperation={this.handleOperation}/>
+                    <Operations handleOperation={this.handleOperation} value='÷'/>
                 </div>
                 <div className='boardRow'>
                     <CalcButton value='0' handleChange={this.handleChange}/>
@@ -260,7 +228,6 @@ class Calculator extends React.Component {
 }
 
 ReactDOM.render(
-        <Calculator className='calculator'/>,
-    document.getElementById('root')
+        <Calculator className='calculator'/>, document.getElementById('root')
 )
 
