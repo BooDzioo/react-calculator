@@ -17,9 +17,9 @@ body {
 
 button {
   width: 100px;
-  height: 109px;
+  height: 110px;
   font-size: 30px;
-  font-family: 'Inconsolata';
+  font-family: 'OCRB';
   text-shadow: 2px 1px 7px black;
   background-color: #352f40;
   outline: 1px;
@@ -40,35 +40,49 @@ button:hover {
 
 .sum {
   width: 200px;
-  /*background-color:#d6d4d4 */
   background-color:#403357;
 }
+
+#sum_inp {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  height: 41px;
+  font-size: 50px;
+}
+
+#operation_inp {
+  position: relative;
+  top: 0;
+  height: 94px;
+  font-size: 70px;
+}
+
 .clearButton {
   background-color:#403357;
 }
 
-.boardRow {
-
-}
-.calcButton {
-
-}
 .operations {
-  /* background-color:#d6d4d4; */
-  /*background-color:#493b63; */
   background-color: #473960;
 }
 
-input {
+#input {
   background-color: #352f40;
   border: none;
   border-bottom: 3px solid #6535b8;
   width: 400px;
-  height: 150px;
+  height: 147px;
   text-align: right;
-  font-size: 75px;
-  font-family: 'Inconsolata';
+  font-family: 'OCRB';
   color: white;
- 
-  
+}
+
+input {
+  width: 394px;
+  background-color: #352f40;
+  border: none;
+  padding: 3px;
+  text-align: right;
+  font-family: 'OCRB';
+  color: white;
 }
