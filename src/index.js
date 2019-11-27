@@ -87,8 +87,7 @@ let signs = []
 let sum = []
 
 const baseNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-const baseSigns =                                                   //['^', 'x', '÷', '+', '-']
-{
+const baseSigns =   {                                                
     '^': '^',
     'x': 'x',
     '÷': '÷',
@@ -127,7 +126,7 @@ class Calculator extends React.Component {
                 })
             }
             if (this.state.current.indexOf('.') !== -1) {
-                let v = this.state.indexOf('.')
+                let v = this.state.current.indexOf('.')
                 let y = true
                 for (let i = this.state.current.length - 1; i > v; i--) {
                     if (this.state.current.charAt(i) !== 0) {
@@ -174,14 +173,6 @@ class Calculator extends React.Component {
                         }
                     }
             }
-        /*    if (this.state.sumed !== '') {
-                let sumed = this.state.sumed
-                this.setState({
-                    sumed: '',
-                    current: `${sumed}${e}`,
-                    history: `${sumed}${e}`
-                })
-            } */
         }
 
 
@@ -196,6 +187,9 @@ class Calculator extends React.Component {
 
 
         if (e in baseNumbers) {
+            if (this.state.sumed !== '') {
+                this.handleClearClick()
+            }
             if (e === '0') {
                 if (this.state.history.charAt(this.state.history.length - 1) !== '') {  //uniemożliwienie wpisania 0 na początku
                     this.setState({
@@ -253,7 +247,7 @@ class Calculator extends React.Component {
 
     handleSumClick() {
         if (this.state.current.indexOf('.') !== -1) {
-            let v = this.state.indexOf('.')
+            let v = this.state.current.indexOf('.')
             let y = true
             for (let i = this.state.current.length - 1; i > v; i--) {
                 if (this.state.current.charAt(i) !== 0) {
@@ -284,8 +278,8 @@ class Calculator extends React.Component {
             sum.push(signs[x])
             
         }
-        console.log(numbers)
-        console.log(sum)
+        
+        
         while(sum.findIndex((element) => element === '^') !== -1) {
             let index = sum.findIndex((element) => element === '^')
             sum[index - 1] = Math.pow(sum[index - 1], sum[index + 1])
@@ -294,32 +288,32 @@ class Calculator extends React.Component {
 
         while(sum.findIndex((element) => element === 'x') !== -1) {
             let index = sum.findIndex((element) => element === 'x')
-            console.log('x')
+            
             sum[index - 1] = sum[index - 1] * sum[index + 1]
             sum.splice(index, 2)
         }
 
         while(sum.findIndex((element) => element === '÷') !== -1) {
             let index = sum.findIndex((element) => element === '÷')
-            console.log('/')
+            
             sum[index - 1] = sum[index - 1] / sum[index + 1]
             sum.splice(index, 2)
         }
 
         while(sum.findIndex((element) => element === '+') !== -1) {
-            console.log('+')
+            
             let index = sum.findIndex((element) => element === '+')
             sum[index - 1] = sum[index - 1] + sum[index + 1]
             sum.splice(index, 2)
         }
 
         while(sum.findIndex((element) => element === '-') !== -1) {
-            console.log('-')
+            
             let index = sum.findIndex((element) => element === '-')
             sum[index - 1] = sum[index - 1]  - sum[index + 1]
             sum.splice(index, 2)
         }
-        console.log(sum[0])
+        
         this.setState({
             sumed: sum[0],
         })
@@ -329,7 +323,7 @@ class Calculator extends React.Component {
 
         if (sum[0] === undefined) {
             this.setState({
-                sumed: 0
+                sumed: this.state.current
             })
         }
 
@@ -349,7 +343,7 @@ class Calculator extends React.Component {
 
     handleKeyDown(e) {
         let keyDown = `${e.key}`
-        console.log(keyDown)
+        
         switch (keyDown) {
             case 'Backspace':
                 this.delete()
