@@ -81,6 +81,7 @@ class CalcButton extends React.Component {
         )
     }
 }
+
 let numbers = []
 let signs = []
 let sum = []
@@ -115,6 +116,16 @@ class Calculator extends React.Component {
 
     handleChange(e) {
         if (e in baseSigns) {
+            if (this.state.sumed !== '') {
+                let sumed = this.state.sumed
+                numbers.push(sumed.toString())
+                signs.push(e)
+
+                this.setState({
+                    sumed: '',
+                    history: `${sumed}${e}`
+                })
+            }
             if (this.state.current.indexOf('.') !== -1) {
                 let v = this.state.indexOf('.')
                 let y = true
@@ -312,6 +323,7 @@ class Calculator extends React.Component {
         this.setState({
             sumed: sum[0],
         })
+
         numbers = []
         signs = []
 
@@ -320,6 +332,8 @@ class Calculator extends React.Component {
                 sumed: 0
             })
         }
+
+        sum = []
     }
 
     handleClearClick() {
@@ -337,12 +351,15 @@ class Calculator extends React.Component {
         let keyDown = `${e.key}`
         console.log(keyDown)
         switch (keyDown) {
-            case 'del':
+            case 'Backspace':
+                this.delete()
+                break;
+            case 'Delete':
             case 'Escape':
                 this.handleClearClick()
                 break;
-            case '=':
             case 'Enter':
+            case '=':
                 this.handleSumClick()
                 break;
             case '1':
