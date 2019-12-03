@@ -78,7 +78,7 @@ button:hover {
   width: 400px;
   height: 147px;
   text-align: right;
-  font-family: 'OCRB';
+  font-family: 'Roboto';
   color: white;
 }
 
@@ -88,6 +88,6 @@ input {
   border: none;
   padding: 3px;
   text-align: right;
-  font-family: 'OCRB';
+  font-family: 'Roboto';
   color: white;
 }

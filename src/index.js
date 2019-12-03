@@ -125,7 +125,7 @@ class Calculator extends React.Component {
                     history: `${sumed}${e}`
                 })
             }
-            if (this.state.current.indexOf('.') !== -1) {
+            if (this.state.current.indexOf('.') !== -1) {   //usuwa końcówki w stylu x.0000
                 let v = this.state.current.indexOf('.')
                 let y = true
                 for (let i = this.state.current.length - 1; i > v; i--) {
@@ -144,7 +144,9 @@ class Calculator extends React.Component {
                         history: this.state.history.slice(0, -1)
                     })
                 }
-            }   else if (this.state.current !== '') {
+            }   
+
+            if (this.state.current !== '') {
                     numbers.push(this.state.current)
                     this.setState({
                         current: ''
@@ -275,57 +277,57 @@ class Calculator extends React.Component {
         for (let x = 0; x < numbers.length; x++) {
             let index = parseFloat(numbers[x])
             sum.push(index)
-            sum.push(signs[x])
-            
+            sum.push(signs[x])   
         }
         
         
-        while(sum.findIndex((element) => element === '^') !== -1) {
+        while (sum.findIndex((element) => element === '^') !== -1) {
             let index = sum.findIndex((element) => element === '^')
+
             sum[index - 1] = Math.pow(sum[index - 1], sum[index + 1])
             sum.splice(index, 2)
         }
 
-        while(sum.findIndex((element) => element === 'x') !== -1) {
+        while (sum.findIndex((element) => element === 'x') !== -1) {
             let index = sum.findIndex((element) => element === 'x')
-            
+ 
             sum[index - 1] = sum[index - 1] * sum[index + 1]
             sum.splice(index, 2)
         }
 
-        while(sum.findIndex((element) => element === '÷') !== -1) {
+        while (sum.findIndex((element) => element === '÷') !== -1) {
             let index = sum.findIndex((element) => element === '÷')
             
             sum[index - 1] = sum[index - 1] / sum[index + 1]
             sum.splice(index, 2)
         }
 
-        while(sum.findIndex((element) => element === '+') !== -1) {
-            
+        while (sum.findIndex((element) => element === '+') !== -1) {    
             let index = sum.findIndex((element) => element === '+')
+
             sum[index - 1] = sum[index - 1] + sum[index + 1]
             sum.splice(index, 2)
         }
 
-        while(sum.findIndex((element) => element === '-') !== -1) {
-            
+        while (sum.findIndex((element) => element === '-') !== -1) {    
             let index = sum.findIndex((element) => element === '-')
+
             sum[index - 1] = sum[index - 1]  - sum[index + 1]
             sum.splice(index, 2)
         }
-        
-        this.setState({
-            sumed: sum[0],
-        })
-
-        numbers = []
-        signs = []
-
-        if (sum[0] === undefined) {
+    
+        if (sum[0] === undefined) {     //suma bez drugiego wyrażenia
             this.setState({
                 sumed: this.state.current
             })
+        }    else { 
+            this.setState({
+                sumed: sum[0],
+        })
         }
+
+        numbers = []
+        signs = []
 
         sum = []
     }
