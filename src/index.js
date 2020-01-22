@@ -119,11 +119,9 @@ class Calculator extends React.Component {
                 let sumed = this.state.sumed
                 numbers.push(sumed.toString())
                 signs.push(e)
-
-                this.setState({
-                    sumed: '',
-                    history: `${sumed}${e}`
-                })
+               // console.log(`sumed: ${sumed}`)
+                this.setState({sumed: '', history: `${sumed}${e}`})
+               // console.log(`history: ${this.state.history}`)
             }
             if (this.state.current.indexOf('.') !== -1) {   //usuwa końcówki w stylu x.0000
                 let v = this.state.current.indexOf('.')
@@ -160,17 +158,21 @@ class Calculator extends React.Component {
                         history: `${this.state.history}${e}`
                     })
                 }   else {
+                    const history = this.state.sumed != '' ? this.state.sumed : this.state.history
                     this.setState({
-                        history: `${this.state.history}${e}`
+                        history: `${history}${e}`
                     })
+                    signs = this.state.sumed != '' ? [] : signs
                     signs.push(e)
                 }
             }   else {
                     if (parseFloat(numbers[signs.length]) !== NaN) {
                         if(this.state.history.charAt(this.state.history.length - 1) in baseSigns === false) {   //uniemożliwia wpisanie dwoch znaków pod rząd
+                            signs = this.state.sumed != '' ? [] : signs
                             signs.push(e)
+                            const history = this.state.sumed != '' ? this.state.sumed : this.state.history
                             this.setState({
-                                history: `${this.state.history}${e}`
+                                history: `${history}${e}`
                             })
                         }
                     }
@@ -248,6 +250,9 @@ class Calculator extends React.Component {
     }
 
     handleSumClick() {
+        if (this.state.sumed != '') {
+            this.handleClearClick()             //clearing state after second sum click
+        }
         if (this.state.current.indexOf('.') !== -1) {
             let v = this.state.current.indexOf('.')
             let y = true
@@ -378,7 +383,8 @@ class Calculator extends React.Component {
                 this.handleChange('x')
                 break;
             case '/':
-                this.handleChange('÷') 
+                this.handleChange('÷')
+                break; 
             default:
                 break;
         }
