@@ -1,15 +1,12 @@
 import React from 'react';
 
-class Operations extends React.Component {
+const Operations = (props) => {
 
-    handleClick = () => {
-        this.props.handleChange(this.props.value)
+    const handleClick = () => {
+        props.handleChange(props.value);
     }
-    render() {
-        return(
-        <button onClick={this.handleClick} className='operations'>{this.props.value}</button>
-        )
-    }
+
+    return <button onClick={handleClick} className='operations'>{props.value}</button>
 }
 
 export default Operations;

@@ -22,22 +22,14 @@ const baseSigns =   {
 
 class App extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            current: '',
-            history: '',
-            sumed: ''
-        }
-        
-        this.handleKeyDown = this.handleKeyDown.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.handleClearClick = this.handleClearClick.bind(this)
-        this.handleSumClick = this.handleSumClick.bind(this)
-        this.delete = this.delete.bind(this)
+    state = {
+        current: '',
+        history: '',
+        sumed: ''
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
+
         if (e in baseSigns) {
             if (this.state.sumed !== '') {
                 let sumed = this.state.sumed
@@ -133,7 +125,7 @@ class App extends React.Component {
         }
     }
 
-    delete() {
+    delete = () => {
        if (this.state.history.charAt(this.state.history.length - 1) in baseSigns) {
            if (this.state.current === this.state.history.charAt(this.state.history.length - 1)) {   //sprawdzanie czy liczba była ujemna
                 this.setState({
@@ -171,7 +163,7 @@ class App extends React.Component {
        }
     }
 
-    handleSumClick() {
+    handleSumClick = () => {
         if (this.state.sumed != '') {
             this.handleClearClick()             //clearing state after second sum click
         }
@@ -259,7 +251,7 @@ class App extends React.Component {
         sum = []
     }
 
-    handleClearClick() {
+    handleClearClick = () => {
        sum = []
        signs = []
        numbers = []
@@ -270,7 +262,7 @@ class App extends React.Component {
        })
     }
 
-    handleKeyDown(e) {
+    handleKeyDown = (e) => {
         let keyDown = `${e.key}`
         
         switch (keyDown) {

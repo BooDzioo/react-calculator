@@ -1,16 +1,12 @@
 import React from 'react';
 
-class Delete extends React.Component {
+const Delete = (props) => {
 
-    handleClick = () => {
-        this.props.delete()
+    const handleClick = () => {
+        props.delete()
     }
     
-    render() {
-        return(
-            <button onClick={this.handleClick} className='operations'>{this.props.value}</button>
-        )
-    }
+    return <button onClick={handleClick} className='operations'>{props.value}</button>
 }
 
 export default Delete;

@@ -1,16 +1,12 @@
 import React from 'react';
 
-class Num extends React.Component {
+const Num = (props) => {
 
-    handleClick = () => {
-        this.props.handleChange(this.props.value)
+    const handleClick = () => {
+        props.handleChange(props.value);
     }
-    render() {
-        const value = this.props.value
-        return (
-            <button className='CalcButton' onClick={this.handleClick}>{value}</button>
-        )
-    }
+
+    return <button className='CalcButton' onClick={handleClick}>{props.value}</button>
 }
 
 export default Num;

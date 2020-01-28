@@ -1,15 +1,12 @@
 import React from 'react';
 
-class Sum extends React.Component {
+const Sum = (props) => {
 
-    handleClick = () => {
-        this.props.handleSumClick()
+    const handleClick = () => {
+        props.handleSumClick()
     }
-    render() {
-        return(
-            <button className='sum' onClick={this.handleClick}>=</button>
-        )
-    }
+
+    return <button className='sum' onClick={handleClick}>=</button>
 }
 
 export default Sum;

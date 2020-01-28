@@ -1,15 +1,13 @@
 import React from 'react';
 
-class Clear extends React.Component {
+const Clear = (props) => {
 
-    handleClick = () => {
-        this.props.handleClearClick()
+    const handleClick = () => {
+        props.handleClearClick()
     }
-    render() {
-        return(
-            <button className='clearButton' onClick={this.handleClick}>C</button>
-        );
-    }
+
+    return <button className='clearButton' onClick={handleClick}>C</button>
+    
 }
 
 export default Clear;
