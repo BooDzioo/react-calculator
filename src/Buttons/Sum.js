@@ -2,11 +2,7 @@ import React from 'react';
 
 const Sum = (props) => {
 
-    const handleClick = () => {
-        props.handleSumClick()
-    }
-
-    return <button className='sum' onClick={handleClick}>=</button>
+    return <button className='sum' onClick={props.handleSumClick}>=</button>
 }
 
 export default Sum;
